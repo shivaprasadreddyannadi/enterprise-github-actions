@@ -1,5 +1,11 @@
 # Enterprise GitHub Actions
 
+[![Terraform Validation](https://github.com/shivaprasadreddyannadi/enterprise-github-actions/actions/workflows/terraform-validation.yml/badge.svg)](https://github.com/shivaprasadreddyannadi/enterprise-github-actions/actions/workflows/terraform-validation.yml)
+
+[![Docker Build](https://github.com/shivaprasadreddyannadi/enterprise-github-actions/actions/workflows/docker-build.yml/badge.svg)](https://github.com/shivaprasadreddyannadi/enterprise-github-actions/actions/workflows/docker-build.yml)
+
+[![Security Scan](https://github.com/shivaprasadreddyannadi/enterprise-github-actions/actions/workflows/trivy-security-scan.yml/badge.svg)](https://github.com/shivaprasadreddyannadi/enterprise-github-actions/actions/workflows/trivy-security-scan.yml)
+
 ![GitHub Actions](https://img.shields.io/badge/GitHub-Actions-2088FF?logo=github-actions&logoColor=white)
 
 Enterprise CI/CD pipeline collection demonstrating production-ready GitHub Actions workflows for Infrastructure as Code, Kubernetes, Docker, Java, .NET, Python, security scanning, releases, and deployment automation.
@@ -22,6 +28,17 @@ The workflows are designed to demonstrate enterprise CI/CD practices without req
 - Trivy Security Scan
 - Release Pipeline
 - Reusable Workflow
+
+- [x] Terraform Validation
+- [x] Docker Build
+- [x] Java Build
+- [x] .NET Build
+- [x] Python Build
+- [x] Helm Validation
+- [x] Kubernetes Validation
+- [x] Trivy Security Scan
+- [x] Release Workflow
+- [x] Reusable Terraform Workflow
 
 ## Repository Structure
 
