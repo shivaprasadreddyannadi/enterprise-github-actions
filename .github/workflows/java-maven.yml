@@ -1,0 +1,54 @@
+name: Java Maven Build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "examples/java-maven/**"
+      - ".github/workflows/java-maven.yml"
+
+  pull_request:
+    paths:
+      - "examples/java-maven/**"
+      - ".github/workflows/java-maven.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and Test Java
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: examples/java-maven
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+          cache-dependency-path: examples/java-maven/pom.xml
+
+      - name: Display Java version
+        run: java -version
+
+      - name: Build and test
+        run: mvn --batch-mode --no-transfer-progress clean verify
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-maven-artifact
+          path: examples/java-maven/target/*.jar
+          if-no-files-found: error
+          retention-days: 7
