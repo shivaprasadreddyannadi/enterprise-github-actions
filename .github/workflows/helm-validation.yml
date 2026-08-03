@@ -1,0 +1,49 @@
+name: Helm Validation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "examples/helm-basic/**"
+      - ".github/workflows/helm-validation.yml"
+
+  pull_request:
+    paths:
+      - "examples/helm-basic/**"
+      - ".github/workflows/helm-validation.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  helm:
+    name: Lint and Render Helm
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v4
+
+      - name: Display Helm version
+        run: helm version
+
+      - name: Lint Helm chart
+        run: helm lint examples/helm-basic
+
+      - name: Render Helm templates
+        run: |
+          helm template enterprise-demo examples/helm-basic \
+            --namespace enterprise-demo \
+            > /tmp/helm-rendered.yaml
+
+      - name: Verify rendered resources
+        run: |
+          test -s /tmp/helm-rendered.yaml
+          grep -q "kind: Deployment" /tmp/helm-rendered.yaml
+          grep -q "kind: Service" /tmp/helm-rendered.yaml

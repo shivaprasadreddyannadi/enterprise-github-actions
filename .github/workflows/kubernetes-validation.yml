@@ -1,0 +1,46 @@
+name: Kubernetes Validation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "examples/kubernetes-basic/**"
+      - ".github/workflows/kubernetes-validation.yml"
+
+  pull_request:
+    paths:
+      - "examples/kubernetes-basic/**"
+      - ".github/workflows/kubernetes-validation.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kubernetes:
+    name: Render Kubernetes Manifests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Display kubectl version
+        run: kubectl version --client
+
+      - name: Render Kustomize configuration
+        run: |
+          kubectl kustomize examples/kubernetes-basic \
+            > /tmp/kubernetes-rendered.yaml
+
+      - name: Verify rendered resources
+        run: |
+          test -s /tmp/kubernetes-rendered.yaml
+          grep -q "kind: Namespace" /tmp/kubernetes-rendered.yaml
+          grep -q "kind: Deployment" /tmp/kubernetes-rendered.yaml
+          grep -q "kind: Service" /tmp/kubernetes-rendered.yaml
