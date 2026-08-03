@@ -1,0 +1,28 @@
+name: Terraform Validation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "examples/terraform-basic/**"
+      - ".github/workflows/terraform-validation.yml"
+      - ".github/workflows/reusable-terraform-validation.yml"
+
+  pull_request:
+    paths:
+      - "examples/terraform-basic/**"
+      - ".github/workflows/terraform-validation.yml"
+      - ".github/workflows/reusable-terraform-validation.yml"
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    uses: ./.github/workflows/reusable-terraform-validation.yml
+    with:
+      working_directory: examples/terraform-basic
+      terraform_version: "1.15.8"
