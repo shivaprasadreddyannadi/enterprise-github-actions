@@ -1,4 +1,5 @@
 using EnterpriseActions.Core;
+using Xunit;
 
 namespace EnterpriseActions.Core.Tests;
 
