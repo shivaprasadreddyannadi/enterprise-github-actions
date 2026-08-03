@@ -1,0 +1,13 @@
+[project]
+name = "enterprise-github-actions-demo"
+version = "1.0.0"
+description = "Sample Python project for GitHub Actions CI."
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
